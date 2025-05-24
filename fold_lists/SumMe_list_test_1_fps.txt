@@ -1,0 +1,8 @@
+Valparaiso_Downhill 5177 29.970030
+Car_railcrossing 5074 29.970030
+Bearpark_climbing 3340 24.999750
+Playing_on_water_slide 3064 29.970030
+Fire_Domino 1611 29.999700
+Cockpit_Landing 9045 29.970030
+Saving_dolphines 6682 29.970030
+Notre_Dame 4607 23.999760

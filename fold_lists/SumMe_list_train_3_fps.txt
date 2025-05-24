@@ -1,0 +1,16 @@
+Valparaiso_Downhill 5177 29.970030
+Car_railcrossing 5074 29.970030
+Bearpark_climbing 3340 24.999750
+Playing_on_water_slide 3064 29.970030
+Fire_Domino 1611 29.999700
+Cockpit_Landing 9045 29.970030
+Saving_dolphines 6682 29.970030
+Notre_Dame 4607 23.999760
+Cooking 1279 14.999850
+Bus_in_Rock_Tunnel 5130 29.999700
+Uncut_Evening_Flight 9671 29.970030
+playing_ball 3118 29.999700
+St_Maarten_Landing 1750 24.999750
+Paintball 6095 23.976024
+Air_Force_One 4493 24.999750
+car_over_camera 4381 29.970030

@@ -1,0 +1,17 @@
+Valparaiso_Downhill 5177 29.970030
+Car_railcrossing 5074 29.970030
+Bearpark_climbing 3340 24.999750
+Playing_on_water_slide 3064 29.970030
+Fire_Domino 1611 29.999700
+Cockpit_Landing 9045 29.970030
+Saving_dolphines 6682 29.970030
+Notre_Dame 4607 23.999760
+Base_jumping 4728 29.970030
+Bike_Polo 3063 29.999700
+Scuba 2220 29.999700
+paluma_jump 2573 29.970030
+Kids_playing_in_leaves 3186 29.970030
+Eiffel_Tower 4970 24.999750
+Statue_of_Liberty 3862 24.999750
+Excavators_river_crossing 9720 24.999750
+Jumps 949 24.999750
