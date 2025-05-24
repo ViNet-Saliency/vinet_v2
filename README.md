@@ -39,3 +39,7 @@ This paper introduces ViNet-S, a 36MB model based on the ViNet architecture with
 ## Contact
 
 For any queries or questions, please contact [rohit.girmaji@research.iiit.ac.in](mailto:rohit.girmaji@research.iiit.ac.in) or [vgandhi@iiit.ac.in](mailto:vgandhi@iiit.ac.in), or use the public issues section of this repository.
+
+----
+
+> This work © 2025 by the authors of the <a href="https://ieeexplore.ieee.org/abstract/document/10888852">paper</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;">
