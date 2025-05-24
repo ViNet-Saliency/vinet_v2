@@ -5,6 +5,8 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2502.00397-ca001c.svg)](https://arxiv.org/abs/2502.00397) 
 [![IEEE Xplore](https://img.shields.io/badge/IEEE%20Xplore-10888852-99b3eb.svg)](https://ieeexplore.ieee.org/abstract/document/10888852) 
 
+Accepted at [2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP 2025)](https://2025.ieeeicassp.org/).
+
 ----
 
 ![Results Image](./figures/icassp_qual.png)
