@@ -1,0 +1,18 @@
+program: train.py
+name: eeaa-sweep-demo
+method: grid
+metric:
+  goal: minimize
+  name: test_avg_loss
+project: EEAA-B
+parameters:
+  batch_size:
+    value: 4
+  decoder_groups:
+    values: [8, 16, 32, 64]
+  no_epochs:
+    value: 3
+  lr:
+    values: [0.001, 0.0001]
+  optim:
+    value: 'Adam'
