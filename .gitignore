@@ -3,3 +3,6 @@ annotations/
 saved_models/
 __pycache__/
 .vscode/
+*.pt
+*.pth
+*.tar
