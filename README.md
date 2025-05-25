@@ -29,10 +29,6 @@ This paper introduces ViNet-S, a 36MB model based on the ViNet architecture with
   booktitle={ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, 
   title={Minimalistic Video Saliency Prediction via Efficient Decoder & Spatio Temporal Action Cues}, 
   year={2025},
-  volume={},
-  number={},
-  pages={1-5},
-  keywords={Location awareness;Visualization;Convolution;Streaming media;Predictive models;Transformers;Real-time systems;Decoding;Speech processing;Optimization;Video Saliency Prediction;Efficient Deep Learning;Spatio Temporal Action Cues},
   doi={10.1109/ICASSP49660.2025.10888852},
   url={https://ieeexplore.ieee.org/abstract/document/10888852}
 }
@@ -40,7 +36,7 @@ This paper introduces ViNet-S, a 36MB model based on the ViNet architecture with
 
 ## Contact
 
-For any queries or questions, please contact [rohit.girmaji@research.iiit.ac.in](mailto:rohit.girmaji@research.iiit.ac.in) or [vgandhi@iiit.ac.in](mailto:vgandhi@iiit.ac.in), or use the public issues section of this repository.
+For any queries or questions, please contact [rohit.girmaji@research.iiit.ac.in](mailto:rohit.girmaji@research.iiit.ac.in) or [bhav.beri@researchiiit.ac.in](mailto:bhav.beri@researchiiit.ac.in), or use the public issues section of this repository.
 
 ----
 
