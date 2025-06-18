@@ -97,7 +97,7 @@ parser.add_argument('--gt_sal_maps_path', default='', type=str)
 
 parser.add_argument('--fold_lists_path', default='', type=str)
 
-parser.add_argument('--model_save_root_path',default="/home/sid/fantastic_gains/saved_models/", type=str)
+parser.add_argument('--model_save_path',default="/home/sid/fantastic_gains/saved_models/", type=str)
 
 
 #checkpoint_path
@@ -135,11 +135,15 @@ if args.dataset == 'Hollywood2':
     print("Seed used is : ",seed)
 
 if args.dataset == 'DHF1K':
-    seed = 0#867
+    seed = 867
     print("Seed used is : ",seed)
 
 if args.dataset == 'Coutrot_db2':
-    seed = np.random.randint(0,10000)#867
+    seed = 867#np.random.randint(0,10000)#867
+    print("Seed used is : ",seed)
+
+if args.dataset == 'Coutrot_db1':
+    seed = 867#np.random.randint(0,10000)#867
     print("Seed used is : ",seed)
 
 if args.dataset == 'DIEM':
@@ -147,20 +151,16 @@ if args.dataset == 'DIEM':
     print("Seed used is : ",seed)
 
 if args.dataset == 'SumMe':
-    seed = np.random.randint(0,10000)#867
+    seed = 867#np.random.randint(0,10000)#867
     print("Seed used is : ",seed)
 
 if args.dataset == 'ETMD_av':
-    seed = np.random.randint(0,10000)#867
-    print("Seed used is : ",seed)
-
-if args.dataset == 'Concat_AV_Dataset':
-    seed = 2934#5924# np.random.randint(0,10000)#867
+    seed = 867#np.random.randint(0,10000)#867
     print("Seed used is : ",seed)
 
 
 if args.dataset == 'UCF':
-    seed = np.random.randint(0,10000)#867
+    seed = 867#np.random.randint(0,10000)#867
     print("Seed used is : ",seed)
 
 
@@ -173,24 +173,21 @@ torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
 
+args.model_tag = args.model_tag + 'ViNet_A'
 
-if args.use_action_classification == 1:
-    args.model_tag = args.model_tag + 'ViNet_S'
-else:
-    args.model_tag = args.model_tag + 'ViNet_A'
-    
-# flags_used = '_'.join(flags_used)
 
 model_tag = '%s_%s_%s_%s_%s_%s_%s_%s_%s_%s_%s.pt'%(args.model_tag,args.dataset,args.split,args.neck_name,args.decoder_groups,'kldiv'*args.kldiv,'cc'*args.cc,'nss'*args.nss,'sim'*args.sim,args.batch_size,args.seed)
 
-model_save_path = join(args.model_save_root_path,model_tag)
+model_save_path = join(args.model_save_path,model_tag)
 
-print(args.model_save_root_path)
+print(args.model_save_path)
 print("model save path is : ", model_save_path)
-# wandb.login()#key="93f49f2dd42102155034716f30b785aa341ac46b")
+ 
+# create the directory to save the models
+os.makedirs(args.model_save_path,exist_ok=True)
 
-# wandb.login(key="947c6d8652e2600fbb5bc6f519588ea095620e6b")
-wandb.login(key="947c6d8652e2600fbb5bc6f519588ea095620e6b")
+
+wandb.login()
 
 # wandb.init()
 wandb.init(
@@ -241,54 +238,7 @@ elif args.dataset == "Hollywood2":
     print("Using Hollywood2 dataset")
     train_dataset = Hollywood2_Dataset(args, mode="train")
     val_dataset = Hollywood2_Dataset(args, mode="val")
-
-elif args.dataset=="Concat_AV_Dataset":
-
-    print("----------------------------------USING Concat_AV_Dataset----------------------------------")
-
-    print("Loading DIEM Dataset")
-    train_dataset_diem = Other_AudioVisual_Dataset(args,dataset='DIEM',mode='train',use_extra_data=False)
-    val_dataset_diem = Other_AudioVisual_Dataset(args,dataset='DIEM',mode='val',use_extra_data=False)
-
-    print("Loading ETMD Dataset")
-
-    train_dataset_etmd = Other_AudioVisual_Dataset(args,dataset='ETMD_av',mode='train',use_extra_data=True)
-    val_dataset_etmd = Other_AudioVisual_Dataset(args,dataset='ETMD_av',mode='val',use_extra_data=True)
-
-    print("Loading Coutrot Dataset")
-
-    train_dataset_coutrout1 = Other_AudioVisual_Dataset(args,dataset='Coutrot_db1',mode='train')
-    val_dataset_coutrout1 = Other_AudioVisual_Dataset(args,dataset='Coutrot_db1',mode='val')
-
-    
-
-    train_dataset_coutrout2 = Other_AudioVisual_Dataset(args,dataset='Coutrot_db2',mode='train')
-    val_dataset_coutrout2 = Other_AudioVisual_Dataset(args,dataset='Coutrot_db2',mode='val')
-
-    print("Loading AVAD Dataset")
-    
-    train_dataset_avad = Other_AudioVisual_Dataset(args,dataset='AVAD',mode='train')
-    val_dataset_avad = Other_AudioVisual_Dataset(args,dataset='AVAD',mode='val')
-
-    print("Loading SumMe Dataset")
-
-    train_dataset_summe = Other_AudioVisual_Dataset(args,dataset='SumMe',mode='train')
-    val_dataset_summe = Other_AudioVisual_Dataset(args,dataset='SumMe',mode='val',stride=2)
-    
-    train_dataset = torch.utils.data.ConcatDataset([
-                train_dataset_diem, train_dataset_coutrout1,
-                train_dataset_coutrout2, 
-                train_dataset_avad, train_dataset_etmd,
-                train_dataset_summe 
-        ])
-
-    val_dataset = torch.utils.data.ConcatDataset([
-                val_dataset_diem, val_dataset_coutrout1,
-                val_dataset_coutrout2, 
-                val_dataset_avad, val_dataset_etmd,
-                val_dataset_summe 
-        ])
-    
+   
 
 elif args.dataset == "mvva":
     print("Using MVVA dataset")
@@ -327,7 +277,6 @@ print("Loading the dataset...")
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=args.no_workers)
 val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=1, shuffle=False, num_workers=args.no_workers)
 
-print ('loading SlowFast weight file')
 
 if  args.checkpoint_path == "None":
     if args.use_action_classification:
@@ -348,14 +297,14 @@ if  args.checkpoint_path == "None":
             new_state_dict[name] = param
         weight_dict = new_state_dict
 
-    print (' loaded SlowFast weight file')
+    print ('loaded SlowFast weight file')
     model.backbone.load_state_dict(weight_dict, strict=False)
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 if args.checkpoint_path!="None":
     print("Loading pretrained {} model weights if any: {}".format(args.model_tag,args.checkpoint_path))
-    model.load_state_dict(torch.load(os.path.expanduser(args.checkpoint_path), map_location=device))
+    model.load_state_dict(torch.load(os.path.expanduser(args.checkpoint_path), map_location=device),strict=True)
 
 # print(args)
 print(model)
@@ -370,13 +319,9 @@ if args.optim == 'Adam':
     optimizer = torch.optim.Adam(params, lr=args.lr)
 else:
     optimizer = torch.optim.SGD(params, lr=args.lr)
-if args.lr_sched:
-    if args.scheduler == 'StepLR':
-        scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=args.step_size, gamma=0.1)
-    elif args.scheduler == 'ReduceLROnPlateau':
-        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min')
 
-print(device)
+
+print("Using the device: ",device)
 
 def train(model, optimizer, loader, epoch, device, args):
     model.train()
@@ -404,7 +349,7 @@ def train(model, optimizer, loader, epoch, device, args):
 
         pred_sal = model(img_clips)
 
-
+        # print(pred_sal.size(),gt_sal.size())
 
         assert pred_sal.size() == gt_sal.size()
 
@@ -521,12 +466,14 @@ def validate(model, loader, epoch, device, args):
         gt_sal = gt_sal.squeeze(0).numpy()
 
         pred_sal = pred_sal.cpu().squeeze(0).numpy()
+
+
         pred_sal = cv2.resize(pred_sal, (gt_sal.shape[1], gt_sal.shape[0]))
         pred_sal = blur(pred_sal).unsqueeze(0).cuda()
 
 
-
         gt_sal = torch.FloatTensor(gt_sal).unsqueeze(0).cuda()
+
 
         assert pred_sal.size() == gt_sal.size()
 
@@ -605,6 +552,9 @@ def validate(model, loader, epoch, device, args):
 
 
 best_model = None
+
+
+
 for epoch in range(0, args.no_epochs):
 
 
@@ -631,13 +581,5 @@ for epoch in range(0, args.no_epochs):
                 torch.save(model.module.state_dict(), model_save_path)
             else:
                 torch.save(model.state_dict(), model_save_path)
-    print()
-
-
-    if args.lr_sched:
-        if args.scheduler == 'StepLR':
-            scheduler.step()
-        elif args.scheduler == 'ReduceLROnPlateau':
-            scheduler.step(val_loss)
 
 

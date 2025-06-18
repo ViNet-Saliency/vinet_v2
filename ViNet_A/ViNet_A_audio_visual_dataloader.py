@@ -103,6 +103,10 @@ class MVVA_Dataset(data.Dataset):
 
 			self.video_names = [i for i in self.video_names if i in self.list_indata]
 
+			if args.video_names_list != '':
+
+				self.video_names = [i for i in self.video_names if i in args.video_names_list]
+
 			print("Test Video names are ",self.video_names)
 
 			self.list_num_frame = []
@@ -259,9 +263,9 @@ class Other_AudioVisual_Dataset(Dataset): #coutrot2,coutrot1,DIEM,AVAD, ETMD,
 
 		self.dataset = dataset
 		self.mode = mode
-		# self.use_skip = bool(args.use_skip)
+		self.use_skip = bool(args.use_skip)
 		self.split = args.split
-		self.path_data = '~/Audio-Visual-SaliencyDatasets'
+		self.path_data = args.videos_root_path #'~/Audio-Visual-SaliencyDatasets'
 		self.use_extra_data = use_extra_data
 		self.stride = stride
 
@@ -351,6 +355,10 @@ class Other_AudioVisual_Dataset(Dataset): #coutrot2,coutrot1,DIEM,AVAD, ETMD,
 			# self.video_names = self.video_names[:1]
 			# print("Video name is ",self.video_names)
 
+			if args.video_names_list != '':
+
+				self.video_names = [i for i in self.video_names if i in args.video_names_list]
+
 			for video_name in self.video_names:
 				num_frames = len(os.listdir(os.path.join(self.path_data,'video_frames',self.dataset,video_name)))
 				print("Number of frames in video ",video_name," are : ",num_frames)
@@ -371,7 +379,7 @@ class Other_AudioVisual_Dataset(Dataset): #coutrot2,coutrot1,DIEM,AVAD, ETMD,
 			video_name,scene_start,scene_end = self.list_num_frame[index]
 			num_frames = len(os.listdir(join(self.path_data,'video_frames',self.dataset,video_name)))
 			
-			mid_frame = np.random.randint(scene_start,scene_end)
+			mid_frame = np.random.randint(scene_start,max(scene_end - self.len_snippet,num_frames))
 
 
 			frame_indices = get_frame_indices(mid_frame,self.len_snippet,num_frames)
@@ -407,14 +415,19 @@ class Other_AudioVisual_Dataset(Dataset): #coutrot2,coutrot1,DIEM,AVAD, ETMD,
 			########### Getting Ground truth saliency map
 
 			path_annt = os.path.join(self.path_data,'annotations',self.dataset,video_name,'maps')
-			gt = np.array(Image.open(join(path_annt,'eyeMap_%05d.jpg'%(mid_frame+1))).convert('L'))
-			gt = gt.astype('float')
+			gt_img = Image.open(join(path_annt,'eyeMap_%05d.jpg'%(mid_frame+1))).convert('L')
 
+			assert os.path.exists(join(path_annt,'eyeMap_%05d.jpg'%(mid_frame+1)))
+			# try:
 			if self.mode == 'train':
 				if self.use_skip:
-					gt = cv2.resize(gt, (456, 256))
+
+					gt_img = gt_img.resize((456, 256), Image.BILINEAR)
 				else:
-					gt = cv2.resize(gt, (448, 224))
+					gt_img = gt_img.resize((448, 224), Image.BILINEAR)
+
+			gt = np.array(gt_img).astype('float')
+			
 
 			if np.max(gt) > 1.0:
 				gt = gt / 255.0
