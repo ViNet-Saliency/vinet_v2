@@ -21,8 +21,8 @@ This paper introduces ViNet-S, a 36MB model based on the ViNet architecture with
 
 ![ViNet Architecture](./figures/arch.png)
 
-## Checkpoint Weights
-[Link](https://drive.google.com/file/d/12UeAsdiD2xPLmoLRDcE_HjAUjxFdmw5N/view?usp=sharing) to the checkpoint weights
+## Checkpoints
+[Link](https://drive.google.com/file/d/12UeAsdiD2xPLmoLRDcE_HjAUjxFdmw5N/view?usp=sharing) to the checkpoints
 
 ## Cite
 
