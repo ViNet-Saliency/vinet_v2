@@ -82,7 +82,7 @@ parser.add_argument('--use_skip', default=1, type=int)
 
 parser.add_argument('--neck_name', default='neck2', type=str)
 
-parser.add_argument('--videos_root_path', default='neck2', type=str)
+parser.add_argument('--videos_root_path', default='', type=str)
 
 parser.add_argument('--videos_frames_root_path', default='', type=str)
 
@@ -173,10 +173,8 @@ torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
 
-args.model_tag = args.model_tag + 'ViNet_A'
 
-
-model_tag = '%s_%s_%s_%s_%s_%s_%s_%s_%s_%s_%s.pt'%(args.model_tag,args.dataset,args.split,args.neck_name,args.decoder_groups,'kldiv'*args.kldiv,'cc'*args.cc,'nss'*args.nss,'sim'*args.sim,args.batch_size,args.seed)
+model_tag = f"ViNet_A_{args.dataset}_{args.split}"
 
 model_save_path = join(args.model_save_path,model_tag)
 

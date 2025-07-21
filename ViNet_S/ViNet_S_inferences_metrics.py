@@ -1,41 +1,38 @@
 import argparse
 import gc
-import glob
-import os
+import glob, os
+import torch
+torch.use_deterministic_algorithms(True,warn_only=True)
+
 import sys
 import time
-import random
-import copy
-import pickle
-import pdb
-
-import torch
-torch.use_deterministic_algorithms(True, warn_only=True)
-
 import torch.nn as nn
+import pickle
+from torch.autograd import Variable
+from torchvision import transforms, utils
+from PIL import Image
+from torch.utils.data import DataLoader
+import numpy as np
 import torch.nn.init as init
 import torch.nn.functional as F
-from torch.autograd import Variable
-from torch.utils.data import DataLoader
-
-import numpy as np
-import cv2
-from PIL import Image
-from torchvision import transforms, utils
-
-from collections import OrderedDict, defaultdict
-
-from tqdm import tqdm
-from os.path import join
-
-import wandb
 
 from loss import *
-from ViNet_A_model import *
-from utils_sal import *
-from ViNet_A_visual_dataloader import *
-from ViNet_A_audio_visual_dataloader import *
+import cv2
 
+import pdb
+from collections import OrderedDict
+import wandb
+
+from ViNet_S_model import *
+from utils import *
+from ViNet_S_dataloader import *
+
+from tqdm import tqdm
+
+from os.path import join
+import random
+from collections import defaultdict 
+import copy
 
 def list_of_strings(string):
 	return string.split(',')
@@ -46,10 +43,21 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--no_workers',default=4, type=int)
 
 
-
+parser.add_argument('--frames_path', default='images', type=str)
 parser.add_argument('--decoder_groups', default=32, type=int)
+parser.add_argument('--decoder_upsample',default=1, type=int)
+parser.add_argument('--num_hier',default=3, type=int)
+parser.add_argument('--clip_size',default=32, type=int)
+parser.add_argument('--batch_size',default=1, type=int)
+parser.add_argument('--pin_memory',default=False, type=bool)
 
 
+parser.add_argument('--grouped_conv',default=True, type=bool)
+parser.add_argument('--root_grouping', default=True, type=bool)
+parser.add_argument('--depth_grouping', default=False, type=bool)
+parser.add_argument('--efficientnet', default=False, type=bool)
+parser.add_argument('--use_trilinear_upsampling', default=False, type=bool)
+parser.add_argument('--alternate',default=1, type=int)
 
 parser.add_argument('--dataset',default="mvva", type=str)
 
@@ -119,83 +127,76 @@ parser.add_argument('--video_names_list',default='', type=list_of_strings)
 args = parser.parse_args()
 print(args)
 
+# added
+seed = 0
+np.random.seed(seed)
+torch.manual_seed(seed)
 
 torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
 
-model_tag = args.model_tag + 'ViNet_A'
-	
 
-model = ViNet_A(args)
+model_name = args.checkpoint_path.split('/')[-1].split('.')[0]
 
+model = VideoSaliencyModel(
+	use_upsample=bool(args.decoder_upsample),
+    num_hier=args.num_hier,
+    num_clips=args.clip_size,
+    grouped_conv=args.grouped_conv,
+    root_grouping=args.root_grouping,
+    depth=args.depth_grouping,
+    efficientnet=args.efficientnet,
+    BiCubic = False,#not args.use_trilinear_upsampling,
+)
 
 
 
 if args.dataset == "DHF1K":
-
-	test_dataset = DHF1K_Dataset(args,mode='test')
-
-
-
-elif args.dataset == "UCF":
-	print("Using UCF dataset")
-
-	test_dataset = UCF_Dataset(args,mode='test')
+    test_dataset = DHF1KDataset(args.clip_size, mode="test", alternate=args.alternate, frames_path=args.frames_path,args = args)
+   
 
 elif args.dataset == "Hollywood2":
-	print("Using Hollywood2 dataset")
-
-	test_dataset = Hollywood2_Dataset(args,mode='test')
-
-
-elif args.dataset == "mvva":
-	print("Using MVVA dataset")
-
-	test_dataset = MVVA_Dataset(args,mode = "test")
-  
-
-elif args.dataset == "Coutrot_db2":
-	print("Using Coutrot_db2 dataset")
-
-	test_dataset = Other_AudioVisual_Dataset(args,dataset='Coutrot_db2', mode="test")
-
-elif args.dataset == "Coutrot_db1":
-	print("Using Coutrot_db1 dataset")
-
-	test_dataset = Other_AudioVisual_Dataset(args,dataset='Coutrot_db1', mode="test")
-
-elif args.dataset == "ETMD_av":
-	print("Using ETMD dataset")
-
-	test_dataset = Other_AudioVisual_Dataset(args,dataset='ETMD_av', mode="test")
+    test_dataset = HollywoodDataset(args.clip_size, mode="test", frames_path=args.frames_path,args = args)
+    
+elif args.dataset == "UCF":
+    test_dataset = UCFDataset(args.clip_size, mode="test", frames_path=args.frames_path,args = args)
+    
 
 elif args.dataset == "DIEM":
-	print("Using DIEM dataset")
+    test_dataset = OtherAudioVisualDataset(args.clip_size, mode="test", dataset_name=args.dataset, split=args.split ,args = args)
+    
 
-	test_dataset = Other_AudioVisual_Dataset(args,dataset='DIEM', mode="test")
-
-
+elif args.dataset == "AVAD":
+    test_dataset = OtherAudioVisualDataset(args.clip_size, mode="test", dataset_name=args.dataset, split=args.split ,args = args)
+    
+elif args.dataset == "ETMD_av":
+    test_dataset = OtherAudioVisualDataset(args.clip_size, mode="test", dataset_name=args.dataset, split=args.split ,args = args)
+    
+elif args.dataset == "Coutrot_db1":
+    test_dataset = OtherAudioVisualDataset(args.clip_size, mode="test", dataset_name=args.dataset, split=args.split ,args = args)
+    
+elif args.dataset == "Coutrot_db2":
+    test_dataset = OtherAudioVisualDataset(args.clip_size, mode="test", dataset_name=args.dataset, split=args.split ,args = args)
+    
+elif args.dataset == "mvva":
+    test_dataset = MVVADataset(args.clip_size, mode="test", dataset_name=args.dataset, split=args.split ,args = args)
+    
 
 
 print("Loading the dataset...")
-
-test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=False, num_workers=args.no_workers)
-
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-# Loading the model...
+test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=args.batch_size, shuffle=True, num_workers=args.no_workers, pin_memory=args.pin_memory)
 
 
-if args.checkpoint_path!="None":
-	print("Loading pretrained {} model weights if any: {}".format(model_tag,args.checkpoint_path))
-	model.load_state_dict(torch.load(os.path.expanduser(args.checkpoint_path), map_location=device),strict=True)
+if args.checkpoint_path!='':
+	print("Loading pretrained ViNet (36MB) weights if any: ",args.checkpoint_path)
+	model.load_state_dict(torch.load(args.checkpoint_path))
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 if torch.cuda.device_count() > 1:
 	print("Let's use", torch.cuda.device_count(), "GPUs!")
-	teacher_model = nn.DataParallel(model)
+	model = nn.DataParallel(model)
 model.to(device)
 
 model_name = args.checkpoint_path.split('/')[-1].split('.')[0]
@@ -215,11 +216,9 @@ def test(model, loader, device, args):
 	video_num_frames = defaultdict(int)
 
 	total_time = 0
-	num_frames = 0
-	
 	kldiv_nan_counts,cc_nan_counts,sim_nan_counts,nss_nan_counts,aucj_nan_counts = 0,0,0,0,0
 
-	nan_counts = {"KLDiv": 0, "CC": 0, "SIM": 0, "NSS": 0, "AUCj": 0}
+	num_frames = 0
 
 	for idx, sample in tqdm(enumerate(loader)):
 
@@ -230,15 +229,13 @@ def test(model, loader, device, args):
 		gt_sal = sample[1]
 		binary_img = sample[2]
 		video_name = sample[3][0]
-		mid_frame = sample[4]
-
+		end_idx = sample[4]
 
 		img_clips = img_clips.to(device)
 		img_clips = img_clips.permute((0,2,1,3,4))
 
 
 		pred_sal = model(img_clips)
-	
 
 		# post processing of output
 		
@@ -248,12 +245,12 @@ def test(model, loader, device, args):
 		pred_sal = cv2.resize(pred_sal, (gt_sal.shape[1], gt_sal.shape[0]))
 		pred_sal = blur(pred_sal).unsqueeze(0).cuda()
 
-
-		
 		if args.save_inferences and args.save_path is not None:
-			os.makedirs(join(args.save_path, 'inferences',args.dataset,'ViNet_A',video_name),exist_ok=True)
-			img_save(pred_sal, join(args.save_path,'inferences',args.dataset,'ViNet_A', video_name, 'img_%05d.png'%(mid_frame+1)), normalize=True)
+			os.makedirs(join(args.save_path, 'inferences',args.dataset,'ViNet_S',video_name),exist_ok=True)
+			img_save(pred_sal, join(args.save_path,'inferences',args.dataset,'ViNet_S', video_name, 'img_%05d.png'%(end_idx+1)), normalize=True)
 			
+			
+
 
 		gt_sal = torch.FloatTensor(gt_sal).unsqueeze(0).cuda()
 
@@ -299,7 +296,7 @@ def test(model, loader, device, args):
 				aucj_loss = torch.FloatTensor([0.0]).cuda()
 				aucj_nan_counts += 1
 
-			
+			nan_counts = {"KLDiv": kldiv_nan_counts, "CC": cc_nan_counts, "SIM": sim_nan_counts, "NSS": nss_nan_counts, "AUCj": aucj_nan_counts}
 
 			video_kldiv_loss[video_name] += kldiv_loss.item()
 			video_cc_loss[video_name] += cc_loss.item()
@@ -307,7 +304,6 @@ def test(model, loader, device, args):
 			video_nss_loss[video_name] += nss_loss.item()
 			video_aucj_loss[video_name] += aucj_loss.item()
 			video_num_frames[video_name] += 1
-
 	nan_counts = {"KLDiv": kldiv_nan_counts, "CC": cc_nan_counts, "SIM": sim_nan_counts, "NSS": nss_nan_counts, "AUCj": aucj_nan_counts}
 
 	print("Total number of NaNs: ", nan_counts)
@@ -316,10 +312,8 @@ def test(model, loader, device, args):
 
 
 
-
 with torch.no_grad():
 	video_kldiv_loss, video_cc_loss, video_sim_loss, video_nss_loss, video_aucj_loss, video_num_frames = test(model,test_loader, device, args)
-
 
 # getting per video metrics
 video_metrics_dict = defaultdict(dict)
@@ -353,4 +347,4 @@ r = json.dumps(video_metrics_dict,indent=4)
 
 with open(join(os.path.expanduser(args.metrics_save_path),args.dataset, f"{model_name}_{str(args.split)}_video_metrics_dict.json"), 'w') as f:
 	f.write(r)
-	
+

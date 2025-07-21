@@ -1,0 +1,483 @@
+./run_train_audio_visual.sh: line 3: activate: No such file or directory
+starting train.py
+wandb: Appending key for api.wandb.ai to your netrc file: /home/rohit/.netrc
+wandb: Currently logged in as: grohit90 (acar-net) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: creating run
+wandb: Tracking run with wandb version 0.19.11
+wandb: Run data is saved locally in /home/rohit/ICASSP_Saliency/ViNet_A/wandb/run-20250529_191538-xdf2cmko
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run ViNet_A_DIEM_1_neck_32_kldiv_cc___2_0.pt
+wandb: ⭐️ View project at https://wandb.ai/acar-net/fantastic_gains
+wandb: 🚀 View run at https://wandb.ai/acar-net/fantastic_gains/runs/xdf2cmko
+Seed used is :  6161
+/home/rohit/ICASSP_Saliency/ViNet_A/saved_models
+model save path is :  /home/rohit/ICASSP_Saliency/ViNet_A/saved_models/ViNet_A_DIEM_1_neck_32_kldiv_cc___2_0.pt
+DECODER GROUPS USED IS :  32
+SHUFFLE1 USED
+SHUFFLE2 USED
+SHUFFLE3 USED
+Total number of parameters in the encoder: 33557288
+Total number of parameters in the decoder: 1960401
+Total number of parameters in the neck: 3175552
+Total number of parameters in the model (encoder + decoder + neck): 38693241
+Size of the model: 147.60 MB
+Using DIEM dataset
+Video names are :  ['pingpong_miscues_1080x720', 'news_video_republic_960x720', 'stewart_lee_1280x712', 'documentary_mystery_nile_1280x720', 'tv_graduates_1280x720', 'sport_poker_1280x640', 'game_trailer_wrath_lich_king_shortened_subtitles_1280x548', 'hairy_bikers_cabbage_1280x712', 'news_us_election_debate_1080x600', 'arctic_bears_1066x710', 'growing_sweetcorn_1280x712', 'news_bee_parasites_768x576', 'scottish_parliament_1152x864', 'music_red_hot_chili_peppers_shortened_1024x576', 'sport_wimbledon_murray_1280x704', 'sport_cricket_ashes_2007_1252x720', 'BBC_wildlife_eagle_930x720', 'sport_F1_slick_tyres_1280x720', 'documentary_planet_earth_1280x704', 'pingpong_closeup_rallys_960x720', 'tv_the_simpsons_860x528', 'tv_ketch2_672x544', 'chilli_plasters_1280x712', 'ami_is1000a_closeup_720x576', 'sport_surfing_in_thurso_900x720', 'basketball_of_sorts_960x720', 'news_wimbledon_macenroe_shortened_768x576', 'movie_trailer_quantum_of_solace_1280x688', 'Antarctica_landscape_1246x720', 'documentary_dolphins_1280x720', 'sport_golf_fade_a_driver_1280x720', 'sport_slam_dunk_1280x704', '50_people_london_1280x720', 'documentary_coral_reef_adventure_1280x720', 'sport_wimbledon_baltacha_1280x704', 'sports_kendo_1280x710', '50_people_london_no_voices_1280x720', 'hummingbirds_narrator_960x720', 'news_newsnight_othello_720x416', '50_people_brooklyn_1280x720', 'BBC_wildlife_special_tiger_1276x720', '50_people_brooklyn_no_voices_1280x720', 'game_trailer_bullet_witch_1280x720', 'spotty_trifle_1280x712', 'pingpong_long_shot_960x720', 'movie_trailer_ice_age_3_1280x690', 'home_movie_Charlie_bit_my_finger_again_960x720', 'news_sherry_drinking_mice_768x576', 'sport_wimbledon_magic_wand_1280x704', 'ami_is1000a_left_720x576', 'sport_football_best_goals_976x720', 'sport_barcelona_extreme_1280x720', 'movie_trailer_alice_in_wonderland_1280x682', 'game_trailer_ghostbusters_1280x720', 'nigella_chocolate_pears_1280x712', 'documentary_discoverers_1280x720', 'game_trailer_lego_indiana_jones_1280x720', 'planet_earth_jungles_monkeys_1280x704', 'scottish_starters_1280x712', 'documentary_adrenaline_rush_1280x720', 'planet_earth_jungles_frogs_1280x704', 'hummingbirds_closeups_960x720', 'advert_bravia_paint_1280x720', 'hydraulics_1280x712']
+Number of training videos are :  64
+Number of training samples are :  64
+Video names are :  ['tv_uni_challenge_final_1280x712', 'music_trailer_nine_inch_nails_1280x720', 'advert_bbc4_bees_1024x576', 'BBC_life_in_cold_blood_1278x710', 'sport_scramblers_1280x720', 'advert_bbc4_library_1024x576', 'BBC_wildlife_serpent_1280x704', 'nightlife_in_mozambique_1280x580', 'university_forum_construction_ionic_1280x720', 'sport_wimbledon_federer_final_1280x704', 'music_gummybear_880x720', 'pingpong_angle_shot_960x720', 'one_show_1280x712', 'DIY_SOS_1280x712', 'harry_potter_6_trailer_1280x544', 'advert_iphone_1272x720', 'pingpong_no_bodies_960x720']
+number of validation videos are :  17
+number of validation samples are :  833
+Loading the dataset...
+loading SlowFast weight file
+Loading pretrained ViNet_A model weights if any: ~/ICASSP_Saliency/ViNet_A/saved_models/ViNet_A_DHF1K_no_split_neck_32_kldiv_cc___6_0.pt
+ViNet_A(
+  (backbone): SlowFast(
+    (fast_conv1): Conv3d(3, 8, kernel_size=(5, 7, 7), stride=(1, 2, 2), padding=(2, 3, 3), bias=False)
+    (fast_bn1): BatchNorm3d(8, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (fast_relu): ReLU(inplace=True)
+    (fast_maxpool): MaxPool3d(kernel_size=(1, 3, 3), stride=(1, 2, 2), padding=(0, 1, 1), dilation=1, ceil_mode=False)
+    (fast_res1): Sequential(
+      (0): Bottleneck(
+        (conv1): Conv3d(8, 8, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(8, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(8, 8, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(8, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(8, 32, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (downsample): Sequential(
+          (0): Conv3d(8, 32, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        )
+        (downsample_bn): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (1): Bottleneck(
+        (conv1): Conv3d(32, 8, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(8, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(8, 8, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(8, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(8, 32, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (2): Bottleneck(
+        (conv1): Conv3d(32, 8, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(8, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(8, 8, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(8, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(8, 32, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+    )
+    (fast_res2): Sequential(
+      (0): Bottleneck(
+        (conv1): Conv3d(32, 16, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(16, 16, kernel_size=(1, 3, 3), stride=(1, 2, 2), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(16, 64, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (downsample): Sequential(
+          (0): Conv3d(32, 64, kernel_size=(1, 1, 1), stride=(1, 2, 2), bias=False)
+        )
+        (downsample_bn): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (1): Bottleneck(
+        (conv1): Conv3d(64, 16, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(16, 16, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(16, 64, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (2): Bottleneck(
+        (conv1): Conv3d(64, 16, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(16, 16, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(16, 64, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (3): Bottleneck(
+        (conv1): Conv3d(64, 16, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(16, 16, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(16, 64, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+    )
+    (fast_res3): Sequential(
+      (0): Bottleneck(
+        (conv1): Conv3d(64, 32, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(32, 32, kernel_size=(1, 3, 3), stride=(1, 2, 2), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(32, 128, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (downsample): Sequential(
+          (0): Conv3d(64, 128, kernel_size=(1, 1, 1), stride=(1, 2, 2), bias=False)
+        )
+        (downsample_bn): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (1): Bottleneck(
+        (conv1): Conv3d(128, 32, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(32, 32, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(32, 128, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (2): Bottleneck(
+        (conv1): Conv3d(128, 32, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(32, 32, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(32, 128, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (3): Bottleneck(
+        (conv1): Conv3d(128, 32, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(32, 32, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(32, 128, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (4): Bottleneck(
+        (conv1): Conv3d(128, 32, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(32, 32, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(32, 128, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (5): Bottleneck(
+        (conv1): Conv3d(128, 32, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(32, 32, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(32, 128, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+    )
+    (fast_res4): Sequential(
+      (0): Bottleneck(
+        (conv1): Conv3d(128, 64, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(64, 64, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 2, 2), dilation=(1, 2, 2), bias=False)
+        (bn2): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(64, 256, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (downsample): Sequential(
+          (0): Conv3d(128, 256, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        )
+        (downsample_bn): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (1): Bottleneck(
+        (conv1): Conv3d(256, 64, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(64, 64, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 2, 2), dilation=(1, 2, 2), bias=False)
+        (bn2): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(64, 256, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (2): Bottleneck(
+        (conv1): Conv3d(256, 64, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(64, 64, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 2, 2), dilation=(1, 2, 2), bias=False)
+        (bn2): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(64, 256, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+    )
+    (slow_conv1): Conv3d(3, 64, kernel_size=(1, 7, 7), stride=(1, 2, 2), padding=(0, 3, 3), bias=False)
+    (slow_bn1): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (slow_relu): ReLU(inplace=True)
+    (slow_maxpool): MaxPool3d(kernel_size=(1, 3, 3), stride=(1, 2, 2), padding=(0, 1, 1), dilation=1, ceil_mode=False)
+    (slow_res1): Sequential(
+      (0): Bottleneck(
+        (conv1): Conv3d(80, 64, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn1): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(64, 64, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(64, 256, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (downsample): Sequential(
+          (0): Conv3d(80, 256, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        )
+        (downsample_bn): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (1): Bottleneck(
+        (conv1): Conv3d(256, 64, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn1): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(64, 64, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(64, 256, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (2): Bottleneck(
+        (conv1): Conv3d(256, 64, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn1): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(64, 64, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(64, 256, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+    )
+    (slow_res2): Sequential(
+      (0): Bottleneck(
+        (conv1): Conv3d(320, 128, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn1): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(128, 128, kernel_size=(1, 3, 3), stride=(1, 2, 2), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(128, 512, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (downsample): Sequential(
+          (0): Conv3d(320, 512, kernel_size=(1, 1, 1), stride=(1, 2, 2), bias=False)
+        )
+        (downsample_bn): BatchNorm3d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (1): Bottleneck(
+        (conv1): Conv3d(512, 128, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn1): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(128, 128, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(128, 512, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (2): Bottleneck(
+        (conv1): Conv3d(512, 128, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn1): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(128, 128, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(128, 512, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (3): Bottleneck(
+        (conv1): Conv3d(512, 128, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn1): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(128, 128, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(128, 512, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+    )
+    (slow_res3): Sequential(
+      (0): Bottleneck(
+        (conv1): Conv3d(640, 256, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(256, 256, kernel_size=(1, 3, 3), stride=(1, 2, 2), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(256, 1024, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (downsample): Sequential(
+          (0): Conv3d(640, 1024, kernel_size=(1, 1, 1), stride=(1, 2, 2), bias=False)
+        )
+        (downsample_bn): BatchNorm3d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (1): Bottleneck(
+        (conv1): Conv3d(1024, 256, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(256, 256, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(256, 1024, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (2): Bottleneck(
+        (conv1): Conv3d(1024, 256, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(256, 256, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(256, 1024, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (3): Bottleneck(
+        (conv1): Conv3d(1024, 256, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(256, 256, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(256, 1024, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (4): Bottleneck(
+        (conv1): Conv3d(1024, 256, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(256, 256, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(256, 1024, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (5): Bottleneck(
+        (conv1): Conv3d(1024, 256, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(256, 256, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+        (bn2): BatchNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(256, 1024, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+    )
+    (slow_res4): Sequential(
+      (0): Bottleneck(
+        (conv1): Conv3d(1280, 512, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(512, 512, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 2, 2), dilation=(1, 2, 2), bias=False)
+        (bn2): BatchNorm3d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(512, 2048, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (downsample): Sequential(
+          (0): Conv3d(1280, 2048, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        )
+        (downsample_bn): BatchNorm3d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (1): Bottleneck(
+        (conv1): Conv3d(2048, 512, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(512, 512, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 2, 2), dilation=(1, 2, 2), bias=False)
+        (bn2): BatchNorm3d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(512, 2048, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (2): Bottleneck(
+        (conv1): Conv3d(2048, 512, kernel_size=(3, 1, 1), stride=(1, 1, 1), padding=(1, 0, 0), bias=False)
+        (bn1): BatchNorm3d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv3d(512, 512, kernel_size=(1, 3, 3), stride=(1, 1, 1), padding=(0, 2, 2), dilation=(1, 2, 2), bias=False)
+        (bn2): BatchNorm3d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv3d(512, 2048, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+        (bn3): BatchNorm3d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+    )
+    (Tconv1): Conv3d(8, 16, kernel_size=(5, 1, 1), stride=(4, 1, 1), padding=(2, 0, 0), bias=False)
+    (Tconv2): Conv3d(32, 64, kernel_size=(5, 1, 1), stride=(4, 1, 1), padding=(2, 0, 0), bias=False)
+    (Tconv3): Conv3d(64, 128, kernel_size=(5, 1, 1), stride=(4, 1, 1), padding=(2, 0, 0), bias=False)
+    (Tconv4): Conv3d(128, 256, kernel_size=(5, 1, 1), stride=(4, 1, 1), padding=(2, 0, 0), bias=False)
+  )
+  (neck): neck(
+    (adaptive_maxpool): AdaptiveMaxPool3d(output_size=(8, 16, 29))
+    (conv_slow): Sequential(
+      (0): Conv3d(2048, 1024, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+      (1): ReLU()
+    )
+    (conv_skip1): Sequential(
+      (0): Conv3d(80, 40, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+      (1): ReLU()
+    )
+    (conv_skip2): Sequential(
+      (0): Conv3d(320, 160, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+      (1): ReLU()
+    )
+    (conv_skip3): Sequential(
+      (0): Conv3d(640, 320, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+      (1): ReLU()
+    )
+    (conv_skip4): Sequential(
+      (0): Conv3d(1280, 640, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+      (1): ReLU()
+    )
+  )
+  (decoder): decoder(
+    (shuffle1): ShuffleBlock()
+    (shuffle2): ShuffleBlock()
+    (shuffle3): ShuffleBlock()
+    (convtsp1): Sequential(
+      (0): Conv3d(1536, 640, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=32, bias=False)
+      (1): ReLU()
+    )
+    (convtsp2): Sequential(
+      (0): Conv3d(1280, 320, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=16, bias=False)
+      (1): ReLU()
+      (2): Upsample(scale_factor=(1.0, 2.0, 1.9655172413793103), mode='trilinear')
+    )
+    (convtsp3): Sequential(
+      (0): Conv3d(640, 160, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=8, bias=False)
+      (1): ReLU()
+      (2): Upsample(scale_factor=(1.0, 2.0, 2.0), mode='trilinear')
+    )
+    (convtsp4): Sequential(
+      (0): Conv3d(320, 40, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=8, bias=False)
+      (1): ReLU()
+    )
+    (convtsp5): Sequential(
+      (0): Conv3d(80, 64, kernel_size=(2, 3, 3), stride=(2, 1, 1), padding=(0, 1, 1), groups=4, bias=False)
+      (1): ReLU()
+      (2): Upsample(scale_factor=(1.0, 2.0, 2.0), mode='trilinear')
+    )
+    (convtsp6): Sequential(
+      (0): Conv3d(64, 32, kernel_size=(2, 3, 3), stride=(2, 1, 1), padding=(0, 1, 1), groups=2, bias=False)
+      (1): ReLU()
+      (2): Upsample(scale_factor=(1.0, 2.0, 2.0), mode='trilinear')
+      (3): Conv3d(32, 16, kernel_size=(2, 3, 3), stride=(1, 1, 1), padding=(0, 1, 1), bias=False)
+      (4): ReLU()
+      (5): Conv3d(16, 16, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+      (6): ReLU()
+      (7): Conv3d(16, 1, kernel_size=(1, 1, 1), stride=(1, 1, 1))
+      (8): Sigmoid()
+    )
+  )
+)
+cuda
+0it [00:00, ?it/s]/home/rohit/miniconda3/envs/DL/lib/python3.11/site-packages/torch/nn/modules/conv.py:720: UserWarning: Deterministic behavior was enabled with either `torch.use_deterministic_algorithms(True)` or `at::Context::setDeterministicAlgorithms(true)`, but this operation is not deterministic because it uses CuBLAS and you have CUDA >= 10.2. To enable deterministic behavior in this case, you must set an environment variable before running your PyTorch application: CUBLAS_WORKSPACE_CONFIG=:4096:8 or CUBLAS_WORKSPACE_CONFIG=:16:8. For more information, go to https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:217.)
+  return F.conv3d(
+/home/rohit/miniconda3/envs/DL/lib/python3.11/site-packages/torch/autograd/graph.py:823: UserWarning: upsample_trilinear3d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:92.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/home/rohit/miniconda3/envs/DL/lib/python3.11/site-packages/torch/autograd/graph.py:823: UserWarning: Deterministic behavior was enabled with either `torch.use_deterministic_algorithms(True)` or `at::Context::setDeterministicAlgorithms(true)`, but this operation is not deterministic because it uses CuBLAS and you have CUDA >= 10.2. To enable deterministic behavior in this case, you must set an environment variable before running your PyTorch application: CUBLAS_WORKSPACE_CONFIG=:4096:8 or CUBLAS_WORKSPACE_CONFIG=:16:8. For more information, go to https://docs.nvidia.com/cuda/cublas/index.html#results-reproducibility (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:217.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/home/rohit/miniconda3/envs/DL/lib/python3.11/site-packages/torch/autograd/graph.py:823: UserWarning: max_pool3d_with_indices_backward_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:92.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+1it [00:01,  1.37s/it]2it [00:02,  1.04s/it]3it [00:03,  1.06it/s]4it [00:03,  1.13it/s][ 0,     4] avg_loss : 1.24763, time:0.077567 minutes
+5it [00:04,  1.16it/s]6it [00:05,  1.19it/s]7it [00:06,  1.20it/s]8it [00:07,  1.21it/s]9it [00:07,  1.21it/s][ 0,     9] avg_loss : 1.19569, time:0.145108 minutes
+10it [00:08,  1.23it/s]11it [00:09,  1.23it/s]12it [00:10,  1.23it/s]13it [00:11,  1.23it/s]14it [00:11,  1.24it/s][ 0,    14] avg_loss : 1.27223, time:0.213044 minutes
+15it [00:12,  1.22it/s]16it [00:13,  1.23it/s]17it [00:14,  1.23it/s]18it [00:15,  1.23it/s]19it [00:15,  1.23it/s][ 0,    19] avg_loss : 0.78751, time:0.280295 minutes
+20it [00:16,  1.24it/s]21it [00:17,  1.23it/s]22it [00:18,  1.23it/s]23it [00:19,  1.23it/s]24it [00:20,  1.23it/s][ 0,    24] avg_loss : 1.03648, time:0.348451 minutes
+25it [00:20,  1.22it/s]26it [00:21,  1.23it/s]27it [00:22,  1.23it/s]28it [00:23,  1.23it/s]29it [00:24,  1.23it/s][ 0,    29] avg_loss : 1.06827, time:0.415935 minutes
+30it [00:24,  1.23it/s]31it [00:25,  1.22it/s]32it [00:26,  1.23it/s]32it [00:26,  1.20it/s]
+0it [00:00, ?it/s]0it [00:00, ?it/s]
+(1, 256, 456)
+Traceback (most recent call last):
+  File "/home/rohit/ICASSP_Saliency/ViNet_A/train.py", line 580, in <module>
+    val_loss,val_losses_dict = validate(model, val_loader, epoch, device, args)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rohit/ICASSP_Saliency/ViNet_A/train.py", line 485, in validate
+    print(pred_sal.shape, type(blur(pred_sal)),blur(pred_sal).shape)
+                               ^^^^^^^^^^^^^^
+  File "/home/rohit/ICASSP_Saliency/ViNet_A/utils_sal.py", line 99, in blur
+    bl = cv2.GaussianBlur(img,(k_size,k_size),0)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+cv2.error: OpenCV(4.7.0) :-1: error: (-5:Bad argument) in function 'GaussianBlur'
+> Overload resolution failed:
+>  - src is not a numpy array, neither a scalar
+>  - Expected Ptr<cv::UMat> for argument 'src'
+
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mViNet_A_DIEM_1_neck_32_kldiv_cc___2_0.pt[0m at: [34mhttps://wandb.ai/acar-net/fantastic_gains/runs/xdf2cmko[0m
+[1;34mwandb[0m: Find logs at: [1;35mwandb/run-20250529_191538-xdf2cmko/logs[0m
